@@ -29,6 +29,14 @@ pipeline {
                 version: '5.3.22'
                 
             }
+            
+        }
+        stage('deploy to the tomcat server') {
+            steps {
+                sh 'wget --user=admin --password=pavan1234 http://54.163.20.123:8081/repository/jenkins-pavan/org/springframework/samples/spring-framework-petclinic/5.3.22/spring-framework-petclinic-5.3.22.war '
+                sh 'mv spring-framework-petclinic-5.3.22.war petclinic.war'
+                sh 'scp petclinic.war root@172.31.20.60:/opt/tomcat/webapps'
+            }
         }
     }
 }
