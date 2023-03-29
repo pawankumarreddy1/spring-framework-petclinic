@@ -16,7 +16,7 @@ pipeline {
                     [
                         artifactId: 'spring-framework-petclinic', 
                         classifier: '', 
-                        file: '/target/Spring Framework Petclinic-5.3.22.war', 
+                        file: '/target/petclinic.war', 
                         type: 'war'
                     ]
                 ], 
