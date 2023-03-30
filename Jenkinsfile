@@ -33,9 +33,9 @@ pipeline {
         }
         stage('deploy to the tomcat server') {
             steps {
-                sh 'wget --user=admin --password=pavan1234 http://3.88.29.196:8081/repository/pavan-nexus/org/springframework/samples/spring-framework-petclinic/5.3.22/spring-framework-petclinic-5.3.22.war '
+                sh 'wget --user=admin --password=pavan http://3.88.29.196:8081/repository/pavan-nexus/org/springframework/samples/spring-framework-petclinic/5.3.22/spring-framework-petclinic-5.3.22.war '
                 sh 'mv spring-framework-petclinic-5.3.22.war petclinic.war'
-                sh 'scp petclinic.war root@172.31.20.60:/opt/tomcat/webapps'
+                sh 'scp petclinic.war root@172.31.80.162:/opt/tomcat/webapps'
             }
         }
     }
