@@ -36,7 +36,7 @@ pipeline {
         stage('deploy to the tomcat server') {
             steps {
                 sh "echo '${NEXUS_CREDENTIALS}' > nexus-credentials.properties"
-//                 sh 'wget --config=nexus-credentials.properties http://54.89.231.225:8081/repository/jenkins-project/org/springframework/samples/spring-framework-petclinic/5.3.22/spring-framework-petclinic-5.3.22.war'
+                sh 'wget --config=nexus-credentials.properties http://54.89.231.225:8081/repository/jenkins-project/org/springframework/samples/spring-framework-petclinic/5.3.22/spring-framework-petclinic-5.3.22.war'
 //                 sh 'mv spring-framework-petclinic-5.3.22.war petclinic.war'
 //                 sh 'scp petclinic.war root@172.31.80.162:/opt/tomcat/webapps'
             }
