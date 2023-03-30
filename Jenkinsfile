@@ -5,7 +5,7 @@ pipeline {
     }
     
     environment {
-        NEXUS_CREDENTIALS = sh(script: 'aws secretsmanager get-secret-value --secret-id my-nexus-credentials --query SecretString --output text', returnStdout: true).trim()
+        NEXUS_CREDENTIALS = sh(script: 'aws secretsmanager get-secret-value --secret-id nexus-credentials --query SecretString --output text', returnStdout: true).trim()
     }
     
     stages {
