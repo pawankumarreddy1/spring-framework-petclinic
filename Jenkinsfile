@@ -12,7 +12,7 @@ pipeline {
     stages {
         stage('Build') {
             steps {
-                sh script: 'mvn clean package'
+                sh script: "mvn clean package -Dbuild.number=${BUILD_NUMBER}"
             }
         }
         stage('Upload files to Nexus') {
@@ -44,5 +44,6 @@ pipeline {
         }
     }
 }
+
 
 
