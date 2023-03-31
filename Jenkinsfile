@@ -31,7 +31,7 @@ pipeline {
                 nexusVersion: 'nexus3',
                 protocol: 'http',
                 repository: 'jenkins-project',
-                version: '1.0.${BUILD_NUMBER}
+                version: '1.0.${BUILD_NUMBER}'
             }
         }
         stage('Deploy to Tomcat server') {
