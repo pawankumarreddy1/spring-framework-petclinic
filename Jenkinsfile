@@ -18,23 +18,23 @@ pipeline {
 
         stage('Upload to Nexus') {
             steps {
-                nexusArtifactUploader nexusInstanceId: 'nexus3', nexusUrl: 'http://nexus-url.com', groupId: 'com.example', version: '1.0.${BUILD_NUMBER}', repository: 'maven-repo', credentialsId: 'nexus-credentials', artifacts: [
+                nexusArtifactUploader nexusInstanceId: 'nexus3', nexusUrl: '172.31.30.144:8081', groupId: 'org.springframework.samples', version: '1.0.${BUILD_NUMBER}', repository: 'jenkins-project', credentialsId: 'nexus-credentials', artifacts: [
                     [
-                        artifactId: 'spring-boot-app',
+                        artifactId: 'spring-framework-petclinic',
                         type: 'war',
                         classifier: '',
-                        file: 'target/spring-boot-app.war'
+                        file: '/var/lib/jenkins/workspace/pavan-project/target/petclinic-${BUILD_NUMBER}.war'
                     ]
                 ]
             }
         }
 
-        stage('Deploy to Tomcat') {
-            steps {
-                sh 'curl -O http://nexus-url.com/repository/maven-repo/com/example/spring-boot-app/1.0.${BUILD_NUMBER}/spring-boot-app-1.0.${BUILD_NUMBER}.war'
-                sh 'scp spring-boot-app-1.0.${BUILD_NUMBER}.war user@172.31.80.162:/opt/tomcat/webapps'
-            }
-        }
+//         stage('Deploy to Tomcat') {
+//             steps {
+//                 sh 'curl -O com/example/spring-boot-app/1.0.${BUILD_NUMBER}/spring-boot-app-1.0.${BUILD_NUMBER}.war'
+//                 sh 'scp spring-boot-app-1.0.${BUILD_NUMBER}.war user@172.31.80.162:/opt/tomcat/webapps'
+//             }
+//         }
     }
 }
 
