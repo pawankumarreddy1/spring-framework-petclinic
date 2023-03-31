@@ -21,7 +21,7 @@ pipeline {
                     [
                         artifactId: 'spring-framework-petclinic',
                         classifier: '',
-                        file: "/var/lib/jenkins/workspace/pavan-project/target/petclinic-${BUILD_NUMBER}.war",
+                        file: "/var/lib/jenkins/workspace/pavan-project/target/petclinic.war",
                         type: 'war'
                     ]
                 ],
