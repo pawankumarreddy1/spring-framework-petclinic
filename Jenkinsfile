@@ -15,28 +15,35 @@ pipeline {
                 sh script: "mvn clean package -Dbuild.number=${BUILD_NUMBER}"
             }
         }
-
-        stage('Upload to Nexus') {
+        stage('Upload files to Nexus') {
             steps {
-                nexusArtifactUploader nexusInstanceId: 'nexus3', nexusUrl: '172.31.30.144:8081', groupId: 'org.springframework.samples', version: '1.0.${BUILD_NUMBER}', repository: 'jenkins-project', credentialsId: 'nexus-credentials', artifacts: [
+                nexusArtifactUploader artifacts: [
                     [
                         artifactId: 'spring-framework-petclinic',
-                        type: 'war',
                         classifier: '',
-                        file: '/var/lib/jenkins/workspace/pavan-project/target/petclinic-${BUILD_NUMBER}.war'
+                        file: "/var/lib/jenkins/workspace/pavan-project/target/petclinic-${BUILD_NUMBER}.war",
+                        type: 'war'
                     ]
-                ]
+                ],
+                credentialsId: 'nexus3',
+                groupId: 'org.springframework.samples',
+                nexusUrl: '172.31.30.144:8081',
+                nexusVersion: 'nexus3',
+                protocol: 'http',
+                repository: 'jenkins-project',
+                version: '5.3.22'
             }
         }
-
-//         stage('Deploy to Tomcat') {
-//             steps {
-//                 sh 'curl -O com/example/spring-boot-app/1.0.${BUILD_NUMBER}/spring-boot-app-1.0.${BUILD_NUMBER}.war'
-//                 sh 'scp spring-boot-app-1.0.${BUILD_NUMBER}.war user@172.31.80.162:/opt/tomcat/webapps'
-//             }
-//         }
+        stage('Deploy to Tomcat server') {
+            steps {
+                sh "echo '${NEXUS_CREDENTIALS}' > nexus-credentials.properties"
+                sh 'curl -u $(cat nexus-credentials.properties | jq -r ".username"):$(cat nexus-credentials.properties | jq -r ".password") -O http://54.89.231.225:8081/repository/jenkins-project/org/springframework/samples/spring-framework-petclinic/5.3.22/spring-framework-petclinic-5.3.22.war'
+                sh "mv spring-framework-petclinic-5.3.22.war petclinic-${BUILD_NUMBER}.war"
+                sh 'scp petclinic-${BUILD_NUMBER}.war root@172.31.80.162:/opt/tomcat/webapps'
+            }
+        }
     }
-}
+} 
 
 
 
